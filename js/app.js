@@ -4,14 +4,14 @@ var addInputField = function(location, value){
   //Add a text input field
     //Use the id of the "other-title" for the field
     //Add a placeholder text of "Your Title" for the field
-  var $input_field =  $('<input>').attr({id:"other-title", type:"text", placeholder:"Specify Job Role"});
-  if (value === "other"){
-    location.after($input_field);
-    $('#other-title').focus();
-  }
-  else{
-    $("#other-title").remove();
-  }
+    var $input_field =  $('<input>').attr({id:"other-title", type:"text", placeholder:"Specify Job Role"});
+    if (value === "other"){
+      location.after($input_field);
+      $('#other-title').focus();
+    }
+    else{
+      $("#other-title").remove();
+    }
 }
 
 $('#title').bind("change click", function(){
