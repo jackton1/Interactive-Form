@@ -24,7 +24,31 @@ $('#title').bind("change click", function(){
 //Set focus to the first Text field on load
 $(function(){
   $('#name').focus();
+  //Hide the color div onload
+  $('#colors-js-puns').css("display","none");
 });
+
+
+//Hide the color label and the select menu until the user selects a color
+$('#design').on("change", function(){
+  var optionValue = $(this).val();
+  switch(optionValue){
+    case "Select Theme":
+         $('#colors-js-puns').css("display","none");
+         break;
+    case "js puns":
+          $('#colors-js-puns').css("display","block");
+         //Show only the color related to the optionValue
+         break;
+    case "heart js":
+          $('#colors-js-puns').css("display","block");
+         //Show only the color related to the optionValue
+         break;
+    default:
+         $('#colors-js-puns').css("display","none");
+    }
+});
+
 
 
 
