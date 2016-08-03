@@ -28,35 +28,55 @@ $(function(){
   $('#colors-js-puns').css("display","none");
 });
 
+var showColor = function(length){
+  var i;
+  for(i = 0 ; i < length ; i++){
+    //Show all the colors
+    $('#color option:nth-of-type('+i+')').css("display","block");
+  }
+}
+
+var hideColor = function(min, max){
+  var i;
+  $('#color option').value = 
+  for(i = min ; i < max ; i++){
+    //Show only the color related to the option selected
+    $('#color option:nth-of-type('+i+')').css("display","none");
+  }
+}
 
 //Hide the color label and the select menu until the user selects a color
 $('#design').on("change", function(){
   var optionValue = $(this).val();
+  var colorOptions = $('#color option');
+  var length = colorOptions.length;
+
   switch(optionValue){
     case "Select Theme":
          $('#colors-js-puns').css("display","none");
          break;
     case "js puns":
           $('#colors-js-puns').css("display","block");
-         //Show only the color related to the optionValue
-         break;
+          //If the user selects Theme-JS Puns then the color menu should only display
+          //"Corn flower Blue", "Dark Slate Grey" and "Gold". first 3 colors.
+          min = 3;
+          max = colorOptions.length;
+          showColor(length);
+          hideColor(min, max);
+          break;
     case "heart js":
+          //If the user select "Theme - 1  JS" then the color menu should only display "Tomato",
+          //"Steel Blue" and "Dim Grey"
           $('#colors-js-puns').css("display","block");
-         //Show only the color related to the optionValue
+          var min = 0;
+          var max = 4;
+          showColor(length);
+          hideColor(min, max);
          break;
     default:
          $('#colors-js-puns').css("display","none");
     }
 });
-
-
-
-
-//If the user selects Theme-JS Puns then the color menu should only display
-//"Corn flower Blue", "Dark Slate Grey" and "Gold".
-
-//If the user select "Theme - 1  JS" then the color menu should only display "Tomato",
-//"Steel Blue" and "Dim Grey"
 
 
 
