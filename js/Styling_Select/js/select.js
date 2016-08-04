@@ -116,9 +116,9 @@ window.onload=function()
 {
 	tamingselect();
 	// add more functions if necessary
-  var location = $('.dropcontainer');
+    var location = $('.dropcontainer');
 	var value;
-	//$('a.trigger').click(function(){$("#other-title").remove()});
+	$('a.trigger').click(function(){$("#other-title").remove()});
 
 	var addInputField = function(value){
 		if (value === "other"){
@@ -128,8 +128,10 @@ window.onload=function()
 				 location.after($input_field);
  				 $('#other-title').focus();
 			 }
-			}
-		else{
+			 else{
+			 	//$()
+			 }
+		}else{
 			$("#other-title").remove();
 		}
 	}
