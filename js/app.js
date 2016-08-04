@@ -28,20 +28,21 @@ $(function(){
   $('#colors-js-puns').css("display","none");
 });
 
-var showColor = function(length){
+var hideColor = function(length){
   var i;
   for(i = 0 ; i < length ; i++){
-    //Show all the colors
-    $('#color option:nth-of-type('+i+')').css("display","block");
+    //Hide all colors
+    $('#color option:nth-of-type('+i+')').css("display","none");
   }
 }
 
-var hideColor = function(min, max){
+var showColor = function(min, max){
   var i;
-  $('#color option').value = 
+  //Set the option val to the min option
+  $("#color").val($('#color option:nth-of-type('+min+')').val());
   for(i = min ; i < max ; i++){
     //Show only the color related to the option selected
-    $('#color option:nth-of-type('+i+')').css("display","none");
+    $('#color option:nth-of-type('+i+')').css("display","block");
   }
 }
 
@@ -59,19 +60,19 @@ $('#design').on("change", function(){
           $('#colors-js-puns').css("display","block");
           //If the user selects Theme-JS Puns then the color menu should only display
           //"Corn flower Blue", "Dark Slate Grey" and "Gold". first 3 colors.
-          min = 3;
-          max = colorOptions.length;
-          showColor(length);
-          hideColor(min, max);
+          min = 1;
+          max = 3;
+          hideColor(length);
+          showColor(min, max);
           break;
     case "heart js":
           //If the user select "Theme - 1  JS" then the color menu should only display "Tomato",
           //"Steel Blue" and "Dim Grey"
           $('#colors-js-puns').css("display","block");
-          var min = 0;
-          var max = 4;
-          showColor(length);
-          hideColor(min, max);
+          var min = 4;
+          var max = colorOptions.length;
+          hideColor(length);
+          showColor(min, max);
          break;
     default:
          $('#colors-js-puns').css("display","none");
