@@ -55,7 +55,7 @@ var showColor = function(min, max){
 
 
 //Hide the color label and the select menu until the user selects a Design Theme
-$('#design').on("change", function(){
+$('#design').on("change keydown", function(){
   var optionValue = this.value;
   var colorOptions = $('#color option');
   //Store the length all available colors
