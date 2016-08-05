@@ -90,6 +90,13 @@ $('#design').on("change keyup", function(){
 //When the user chooses any of the activities calculate the total
 var fieldCheckbox = $('.activities label input[type="checkbox"]');
   fieldCheckbox.each(function() {
+    /*Register for Activities section of the form.
+Some events are at the same time as others.
+If the user selects a workshop, don't allow selection of a workshop at the same date and time
+ -- you should disable the checkbox and visually indicate that the workshop in the competing time slot
+ isn't available.
+When a user unchecks an activity, make sure that competing activities (if there are any)
+are no longer disabled.*/
     $(this).change(function(){
         //Store the activity information
         var activityData;
@@ -170,16 +177,10 @@ $(function(){
 
 
 
-/*Register for Activities section of the form.
-Some events are at the same time as others.
-If the user selects a workshop, don't allow selection of a workshop at the same date and time
- -- you should disable the checkbox and visually indicate that the workshop in the competing time slot
- isn't available.
-When a user unchecks an activity, make sure that competing activities (if there are any)
-are no longer disabled.
 
 
 
+/*
 
 
 Form validation. Display error messages and don't let the user submit the form
