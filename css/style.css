@@ -1,4 +1,4 @@
-/* ================================= 
+/* =================================
   Base Element Styles
 ==================================== */
 
@@ -19,7 +19,7 @@ body {
 }
 
 header {
-	text-align: center;  
+	text-align: center;
 }
 
 h1 {
@@ -32,7 +32,7 @@ a {
   text-decoration: none;
 }
 
-/* ================================= 
+/* =================================
   Form Element Styles
 ==================================== */
 
@@ -54,7 +54,7 @@ fieldset {
 
 legend,
 button {
-	font-size: 1.25em;	
+	font-size: 1.25em;
 }
 
 legend {
@@ -78,7 +78,7 @@ label {
 
 input,
 select {
-	margin-bottom: 1.125em;	
+	margin-bottom: 1.125em;
 }
 
 input {
@@ -113,7 +113,7 @@ button:hover {
 	background: #184c62;
 }
 
-/* ================================= 
+/* =================================
   Page Styles
 ==================================== */
 
@@ -134,8 +134,26 @@ button:hover {
 .credit-card {
 	margin-top: 1.25em;
 }
+/*============================
+Sibling Classes
+==============================*/
+.shirt div > select,
+#payment
+{
+  height: 46px;
+  padding-right: 20px;
+  font-size: 16px;
+  color: #777;
+}
 
-/* ================================= 
+/*============================
+Attribute Selector
+================================*/
+#color option[disabled] {
+    display: none;
+}
+
+/* =================================
   Helper Classes
 ==================================== */
 
@@ -149,7 +167,7 @@ button:hover {
   clear: both;
 }
 
-/* ================================= 
+/* =================================
   Media Queries
 ==================================== */
 
