@@ -116,27 +116,45 @@ window.onload=function()
 {
 	tamingselect();
 	// add more functions if necessary
-    var location = $('.dropcontainer');
-	var value;
-	$('a.trigger').click(function(){$("#other-title").remove()});
 
-	var addInputField = function(value){
-		if (value === "other"){
+    //Add input Field to the DOM
+	var addInputField = function(){
+		    //get the drop container location
+            var location = $('.dropcontainer');
+			//Create an imput box with the id "other-title" and type "text" with placeholder text
 			var $input_field =  $('<input>').attr({id:"other-title", type:"text",
 			 placeholder:"Specify Job Role"});
+			//if the Element doesn't exist on the page
 			 if($('#other-title').length == 0){
+			 	//place it after the drop container location
 				 location.after($input_field);
+				 //Autofocus 
  				 $('#other-title').focus();
 			 }
-			 else{
-			 	//$()
-			 }
-		}else{
+	}
+
+	//Get the values of the li items click
+	$('.dropcontainer ul li').on("click",function(){
+		//Convert the value to lowercase
+		var jobRole = ($(this).children()[0].text).toLowerCase();
+		//Add input Field
+		if (jobRole === "other"){
+		     addInputField();
+		 }
+		else {
+			//Remove it from the dom if the value isn't other
 			$("#other-title").remove();
 		}
-	}
-	$('.dropcontainer ul li').click(function(){
-		value = ($(this).children()[0].text).toLowerCase();
-		addInputField(value);
-	})
+	});
+
+	//If the drop down button is click 
+	$('a.trigger').on("click", function(){
+		//Check the selected values isn't other
+		if($('a.trigger').text() !== "Other"){
+          $("#other-title").remove()
+		}
+		else{
+			addInputField();
+		}
+	});
 }

@@ -92,26 +92,37 @@ var fieldCheckbox = $('.activities label input');
   fieldCheckbox.on("change", function() {
     //Store the activity information
     var activityData;
-    var number = 0;
+    var price = 0;
+    var daysAndTime = [] ;
     for (var i = 0; i < fieldCheckbox.length; i++) {
       var chosen = fieldCheckbox[i];
       if (chosen.checked){
         activityData = $('.activities label input')[i].nextSibling.textContent.split(/[\s,$]+/);
-        number += parseInt(activityData[activityData.length - 1]);
-        console.log(activityData);
+        price += parseInt(activityData[activityData.length - 1]);
+        current_day = activityData[activityData.length - 3];
+        current_time = activityData[activityData.length - 2];
+        daysAndTime.push(current_day + current_time);
+        console.log($('.activities label').index(this));
+      }
+    }
+    console.log(daysAndTime);
+
+    for (var j = 0; j < daysAndTime.length; j++){
+      if(daysAndTime[j] == daysAndTime[j + 1] ){
+        console.log(daysAndTime[j], daysAndTime[j+1]);
       }
     }
     //Append the Total to the activities fieldset
-    var $total = $('<p id="total">Total: '+ number +'</p>');
+    var $total = $('<p id="total">Total: '+ price +'</p>');
     //Check if the element doesn't exist in the DOM before appending
     if(!$('#total').get(0)){
       $('.activities').append($total);
     }
     else{
       //else Update the value
-      $('#total')[0].innerText = 'Total: ' + number;
+      $('#total')[0].innerText = 'Total: ' + price;
       //Check if the total is 0 remove the paragraph tag
-      if(number == 0){
+      if(price == 0){
         $('#total').remove();
       }
     }
