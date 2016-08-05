@@ -55,7 +55,7 @@ var showColor = function(min, max){
 
 
 //Hide the color label and the select menu until the user selects a Design Theme
-$('#design').on("change keydown", function(){
+$('#design').on("change keyup", function(){
   var optionValue = this.value;
   var colorOptions = $('#color option');
   //Store the length all available colors
@@ -119,7 +119,7 @@ var fieldCheckbox = $('.activities label input');
 
 
 //
-$('#payment').on("change", function(){
+$('#payment').on("change keyup", function(){
   //Get the payment value selected
     var payMethod = this.value;
     //Check if any of the payment methods where chosen
