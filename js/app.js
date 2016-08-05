@@ -126,14 +126,14 @@ are no longer disabled.*/
         console.log(daysAndTime);
 
         //Append the Total to the activities fieldset
-        var $total = $('<p id="total">Total: '+ price +'</p>');
+        var $total = $('<p id="total">Total: $'+ price +'</p>');
         //Check if the element doesn't exist in the DOM before appending
         if(!$('#total').get(0)){
           $('.activities').append($total);
         }
         else{
           //else Update the value
-          $('#total')[0].innerText = 'Total: ' + price;
+          $('#total')[0].innerText = 'Total: $' + price;
           //Check if the total is 0 remove the paragraph tag
           if(price == 0){
             $('#total').remove();
@@ -195,10 +195,13 @@ Payment option must be selected.
 If "Credit card" is the selected payment option, make sure the user supplied a credit card number,
  a zip code, and a 3 number CVV value.
 Make sure your program is free of syntax errors.
-You can monitor any errors by looking at the Developer Tools console in your browser.
+
 Use jsHint (see Resources links) to check your code for syntax and formatting problems.
+
 Make sure you add code comments to explain how your programming works.
+
 When JavaScript is switched off or unavailable all information required to be filled out should be visible.
+
 For example, the “Your job role” text field should already be available if someone selects “Other”.
  cross browser compatibility.
  Making sure that it looks and functions correctly in multiple (at least three) browsers is an
