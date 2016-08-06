@@ -197,3 +197,41 @@ Attribute Selector
 		width: 49%;
 	}
 }
+
+/*Selectize.js Styles*/
+.selectize-input{
+  display: block;
+  width: 80%;
+  font-size: 14px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.selectize-dropdown {
+    position: static !important;
+    /*position: absolute ;*/
+}
+.selectize-dropdown-content {
+  max-height: 80px;
+}
+
+.selectize-input items full has-options has-items{
+  padding-right: 70%;
+}
+
+.selectize-control {
+  float: left;
+  margin-right: 40px;
+  width: 40%;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+
+/*Disabled class*/
+
+label[class="disabled"] {
+  color: grey;
+  background-color: grey;
+  cursor: not-allowed;
+}

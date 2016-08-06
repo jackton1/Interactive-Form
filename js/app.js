@@ -86,78 +86,96 @@ $('#design').on("change keyup", function(){
     }
 });
 
+var disable = function(checkbox, i){
+  var fieldCheckbox = checkbox[i].parentNode.parentNode.children;
+  switch (i) {
+    case 1:
+      fieldCheckbox[4].className = "disabled";
+      console.log(fieldCheckbox[4].children[0]);
+      break;
+    case 2:
+      fieldCheckbox[5].className = "disabled";
+      break;
+    case 3:
+      fieldCheckbox[2].className = "disabled";
+      break;
+    case 4:
+      fieldCheckbox[3].className = "disabled";
+      break;
+    default:
+      fieldCheckbox[i].className = "";
+  }
+}
+
+
 
 //When the user chooses any of the activities calculate the total
 var fieldCheckbox = $('.activities label input[type="checkbox"]');
-  fieldCheckbox.each(function() {
-    /*Register for Activities section of the form.
+fieldCheckbox.each(function() {
+/*Register for Activities section of the form.
 Some events are at the same time as others.
 If the user selects a workshop, don't allow selection of a workshop at the same date and time
- -- you should disable the checkbox and visually indicate that the workshop in the competing time slot
- isn't available.
+-- you should disable the checkbox and visually indicate that the workshop in the competing time slot
+isn't available.
 When a user unchecks an activity, make sure that competing activities (if there are any)
 are no longer disabled.*/
-    $(this).change(function(){
-        //Store the activity information
-        var activityData;
-        var price = 0;
-        var daysAndTime = [] ;
-        var index = [];
+  $(this).change(function(){
+      //Store the activity information
+      var activityData;
+      //Store the final price of the selected Activities
+      var price = 0;
+      //Store the Event Day and Time
+      var daysAndTime = [] ;
+      var index = [];
 
-        for (var i = 0; i < fieldCheckbox.length; i++) {
-          var chosen = fieldCheckbox[i];
-          if (chosen.checked){
-            activityData = fieldCheckbox[i].nextSibling.textContent.split(/[\s,$]+/);
+      for (var i = 0; i < fieldCheckbox.length; i++) {
+        var chosen = fieldCheckbox[i];
+        chosen.className = ""
+        var allIndex = $('.activities label').index(chosen.parentNode);
+        index.push(allIndex);
+        activityData = fieldCheckbox[i].nextSibling.textContent.split(/[\s,$]+/);
+        events_days = activityData[activityData.length - 3];
+        events_times = activityData[activityData.length - 2];
+        daysAndTime.push(events_days + ' ' + events_times);
+        if (chosen.checked){
             price += parseInt(activityData[activityData.length - 1]);
-            current_day = activityData[activityData.length - 3];
-            current_time = activityData[activityData.length - 2];
-            var chosenIndex = $('.activities label').index(chosen.parentNode);
-            index.push(chosenIndex);
-            for( var j = 0; j < daysAndTime.length; j++){
-              if(daysAndTime[j] == (current_day + current_time)){
-                console.log(chosenIndex);
-              }
-            }
-            daysAndTime.push(current_day + current_time);
-          }
+            disable(fieldCheckbox, i);
+         }
+      }
+      console.log(index);
+      console.log(daysAndTime);
+      //Append the Total to the activities fieldset
+      var $total = $('<p id="total">Total: $'+ price +'</p>');
+      //Check if the element doesn't exist in the DOM before appending
+      if(!$('#total').get(0)){
+        $('.activities').append($total);
+      }
+      else{
+        //else Update the value
+        $('#total')[0].innerText = 'Total: $' + price;
+        //Check if the total is 0 remove the paragraph tag
+        if(price == 0){
+          $('#total').remove();
         }
-
-        console.log(index);
-        console.log(daysAndTime);
-
-        //Append the Total to the activities fieldset
-        var $total = $('<p id="total">Total: $'+ price +'</p>');
-        //Check if the element doesn't exist in the DOM before appending
-        if(!$('#total').get(0)){
-          $('.activities').append($total);
-        }
-        else{
-          //else Update the value
-          $('#total')[0].innerText = 'Total: $' + price;
-          //Check if the total is 0 remove the paragraph tag
-          if(price == 0){
-            $('#total').remove();
-          }
-        }
-    })
-  });
+      }
+  })
+});
 
 
-//
+//On change of the payment method
 $('#payment').on("change keyup", function(){
   //Get the payment value selected
     var payMethod = this.value;
+     $(this).siblings().hide();
     //Check if any of the payment methods where chosen
     switch (payMethod) {
       case "credit card":
            $("#credit-card").show();
         break;
       case "paypal":
-          $(this).siblings().hide();
           $('#payment').siblings()[3].style.display = "block";
         break;
       case "bitcoin":
-         $(this).siblings().hide();
          $('#payment').siblings()[4].style.display = "block";
        break;
       default:
@@ -173,6 +191,8 @@ $(function(){
   $('#colors-js-puns').css("display","none");
   //Hide all payment methods on load
   $('#payment').siblings().hide();
+  $('.selectize-input input[type = "text"]').prop("readonly" ,true);
+  $('.selectize-input input[type = "text"]').css("cursor", "pointer");
 });
 
 
@@ -212,3 +232,26 @@ Mozilla Firefox
 Internet Explorer/Edge
 Safari
 */
+
+$('#exp-month').selectize();
+$('#exp-year').selectize();
+
+// var $select  = $('#exp-month').selectize({
+//      onMouseOver: function(event) {
+//        //console.log(event.target.text());
+//         var input = 'selectize-input input:eq(0)',
+//               wrapper = 'selectize-input:eq(0)';
+//         $('.' + input).attr('readonly', true);
+//         $('.' + input + ', .' + wrapper).css('cursor', 'pointer');
+//      },
+//      dropdownParent: null,
+//      maxItems: 1,
+//      valueField: 'id',
+//      labelField: 'title',
+//      onDropdownOpen: function () {
+//           $(".selectize-dropdown").hide().slideToggle();
+//       },
+//       onDropdownClose: function () {
+//           $(".selectize-dropdown").show().slideToggle();
+//       }
+// });
