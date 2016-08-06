@@ -208,7 +208,7 @@ Attribute Selector
 }
 
 .selectize-dropdown {
-    position: static !important;
+    position: absolute !important;
     /*position: absolute ;*/
 }
 .selectize-dropdown-content {
@@ -231,7 +231,12 @@ Attribute Selector
 /*Disabled class*/
 
 label[class="disabled"] {
-  color: grey;
-  background-color: grey;
+  background-color: #a6a6a6;
   cursor: not-allowed;
+}
+
+label[class="disabled"]::after{
+	content: " Event on the same day";
+	font-size: 12px;
+	color: red;
 }

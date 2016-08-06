@@ -86,32 +86,40 @@ $('#design').on("change keyup", function(){
     }
 });
 
-var disable = function(checkbox, i){
-  var fieldCheckbox = checkbox[i].parentNode.parentNode.children;
-  switch (i) {
-    case 1:
-      fieldCheckbox[4].className = "disabled";
-      console.log(fieldCheckbox[4].children[0]);
-      break;
-    case 2:
-      fieldCheckbox[5].className = "disabled";
-      break;
-    case 3:
-      fieldCheckbox[2].className = "disabled";
-      break;
-    case 4:
-      fieldCheckbox[3].className = "disabled";
-      break;
-    default:
-      fieldCheckbox[i].className = "";
+
+var disable = function(labels, array, checkbox){
+  //Get the total labels for all events
+  console.log(labels);
+  for(i = 0; i < array.length; i++){
+    if(array[i] != checkbox){
+      labels[array[i]].className = "disabled";
+      labels[array[i]].children[0].disabled = true;
+    }
   }
 }
 
 
+var eventInformation = function(location){
+  //Store the Event Day and Time
+   var daysAndTime = [];
+   for (var i = 0; i < location.length;  i++){
+     var eventData = location[i].textContent.split(/[\s,$]+/);
+     var event_day = eventData[eventData.length - 3];
+     var event_time = eventData[eventData.length - 2];
+     daysAndTime.push(event_day + ' ' + event_time);
+   }
+   return daysAndTime;
+}
 
-//When the user chooses any of the activities calculate the total
-var fieldCheckbox = $('.activities label input[type="checkbox"]');
-fieldCheckbox.each(function() {
+function getAllIndexes(arr, val) {
+    var indexes = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indexes.push(i);
+    }
+    return indexes;
+}
+
+
 /*Register for Activities section of the form.
 Some events are at the same time as others.
 If the user selects a workshop, don't allow selection of a workshop at the same date and time
@@ -119,31 +127,34 @@ If the user selects a workshop, don't allow selection of a workshop at the same 
 isn't available.
 When a user unchecks an activity, make sure that competing activities (if there are any)
 are no longer disabled.*/
-  $(this).change(function(){
-      //Store the activity information
-      var activityData;
+//When the user chooses any of the activities calculate the total
+var events = $('.activities label');
+events.each(function() {
+
+  var $sibling = $(this).find('input[type="checkbox"]')
+  var allEvents = eventInformation(events);
+  $sibling.change(function(){
       //Store the final price of the selected Activities
       var price = 0;
-      //Store the Event Day and Time
-      var daysAndTime = [] ;
-      var index = [];
-
-      for (var i = 0; i < fieldCheckbox.length; i++) {
-        var chosen = fieldCheckbox[i];
-        chosen.className = ""
-        var allIndex = $('.activities label').index(chosen.parentNode);
-        index.push(allIndex);
-        activityData = fieldCheckbox[i].nextSibling.textContent.split(/[\s,$]+/);
-        events_days = activityData[activityData.length - 3];
-        events_times = activityData[activityData.length - 2];
-        daysAndTime.push(events_days + ' ' + events_times);
-        if (chosen.checked){
-            price += parseInt(activityData[activityData.length - 1]);
-            disable(fieldCheckbox, i);
-         }
+      var location = $sibling.parent();
+      //Check if the checkbox is checked
+       $.each(events, function() {
+          $( this ).removeClass("disabled");
+          $(this).children()[0].disabled = false;
+        });
+      if($sibling[0].checked){
+          //Get the select Event information
+          var selectedEvent =  eventInformation(location);
+          //Checkt the index of the checkbox label
+          var checkedIndex = events.index(location);
+          //Get all occurences of the Event in the allEvents array
+          var indexes = getAllIndexes(allEvents, selectedEvent[0]);
+          //If they are more than 1
+          if(indexes.length > 1){
+            //Diabled the second conflicting event
+            disable(events, indexes, checkedIndex);
+          }
       }
-      console.log(index);
-      console.log(daysAndTime);
       //Append the Total to the activities fieldset
       var $total = $('<p id="total">Total: $'+ price +'</p>');
       //Check if the element doesn't exist in the DOM before appending
