@@ -36,13 +36,13 @@ var addInputField = function(){
      if($('#other-title').length == 0){
       //place it after the drop container location
        location.after($input_field);
-       //Autofocus 
+       //Autofocus
        $('#other-title').focus();
      }
 }
 
 
-//Hide the colors that aren't selected 
+//Hide the colors that aren't selected
 var hideColor = function(length){
   var i;
   for(i = 0 ; i < length ; i++){
@@ -51,7 +51,7 @@ var hideColor = function(length){
   }
 }
 
-//Show the required color 
+//Show the required color
 var showColor = function(min, max){
   var i;
   //Display the color options
@@ -95,7 +95,7 @@ $('#design').on("change keyup", function(){
           showColor(min, max);
          break;
     default:
-         // if none if the cases is true hide the colors select 
+         // if none if the cases is true hide the colors select
          $('#colors-js-puns').css("display","none");
     }
 });
@@ -106,8 +106,8 @@ var enable  =function(event){
   var labels = $('.activities label');
   //Get the index of conflicting events
   switch(event){
-    case 1: 
-        //Remove the disabled classname 
+    case 1:
+        //Remove the disabled classname
         labels[3].className = "";
         //Set the input disabled to false
         labels[3].children[0].disabled = false;
@@ -126,7 +126,7 @@ var enable  =function(event){
         break;
     default:
         //Do Nothing
-      
+
   }
 }
 
@@ -137,8 +137,8 @@ var disableConflict = function(event){
   var labels = $('.activities label');
   //Get the index of conflicting events
   switch(event){
-    case 1: 
-        //Add the class name disabled 
+    case 1:
+        //Add the class name disabled
         labels[3].className = "disabled";
         //Set the input disabled to true
         labels[3].children[0].disabled = true;
@@ -156,7 +156,7 @@ var disableConflict = function(event){
         labels[2].children[0].disabled = true;
         break;
     default:
-        
+
   }
 }
 
@@ -177,15 +177,15 @@ are no longer disabled.*/
       var price = 0;
       //Store the Event Day and Time
       // var daysAndTime = [] ;
-      
+
       //Check for all selected events
       for (var i = 0; i < fieldCheckbox.length; i++) {
         var chosen = fieldCheckbox[i];
         //Get the data from the page and add it to an array activityData
         activityData = fieldCheckbox[i].nextSibling.textContent.split(/[\s,$]+/);
-        //If any checkbox is checked 
+        //If any checkbox is checked
         if (chosen.checked){
-            //Add the prices together 
+            //Add the prices together
             price += parseInt(activityData[activityData.length - 1]);
             //If an events conflicts with the selected event disable the second event
             disableConflict(i);
@@ -257,18 +257,18 @@ var correct = function(element){
 
 //On keyup when the user started typing indicate the validity of the input
 $('input#mail').on("keyup focusout", function(){
-    var email = $("input#mail").val(); 
-    //if not valid 
+    var email = $("input#mail").val();
+    //if not valid
     if (!emailIsValid(email) && email !== "") {
-        error("#mail");  
-        $("input#mail").focus();  
-        return false;  
+        error("#mail");
+        $("input#mail").focus();
+        return false;
     }
     //else if valid
     else if(email !== ""){
        correct("#mail");
     }
-    //else if empty 
+    //else if empty
     else{
       noerror("#mail");
     }
@@ -288,8 +288,8 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
   //if invalid report error else report accepted
     if(checked == 0 ){
       error(".activities");
-    } 
-    if(title == "select job title"){ 
+    }
+    if(title == "select job title"){
      error(".trigger");
     }
     if (design == "Select Theme"){
@@ -304,7 +304,7 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
 
 });
 
-//Add Event listener on submit off the form 
+//Add Event listener on submit off the form
 //Check all inout and values required if not valid
 //Alert the user that errors exist in the form
 var formElement = document.querySelector("form");
@@ -319,27 +319,27 @@ formElement.addEventListener("submit", function(event) {
   var month = $('.item')[0].innerText; //"Choose month"
   var year = $('.item')[1].innerText; //"Choose year"
   var submit = false;
-  if(month == "Choose month" || year == "Choose year"){
+  if(month == "Select Month" || year == "Select Year"){
     error('.selectize-input');
   }
-  if(month != "Choose month" && year != "Choose year"){
+  if(month != "Select Month" && year != "Select Year"){
     noerror('.selectize-input');
   }
   if(checked == 0 || title == "select job title" || design == "Select Theme"){
-     submit = false; 
+     submit = false;
     error(".activities");
     error("#title");
     error("#design");
   }
   if(payment == "select_method" && ccnumber != "" && zip != "" && cvv != "" &&
-   month != "Choose month" && year != "Choose year" && checked != 0 &&
+   month != "Select Month" && year != "Select Year" && checked != 0 &&
     title != "select job title" && design != "Select Theme"){
     submit = true;
   }
   if (payment == "credit card" && ccnumber != "" && zip != "" && cvv != "" &&
-   month != "Choose month" && year != "Choose year" && checked != 0 &&
+   month != "Select Month" && year != "Select Year" && checked != 0 &&
     title != "select job title" && design != "Select Theme"){
-     submit = true; 
+     submit = true;
   }
   //If valid alloew the user submit the form
   if(submit){
@@ -361,10 +361,11 @@ $('#exp-year').selectize();
 
 //Window on load functions
 $(function(){
+  $('form').attr("autocomplete","on");
   //Make the name and email fields required
   $('#name, #mail, #design, #title').prop("required",true);
-  //Set the min length for the name to be 2 and 
-  $('#name').attr({minlength: 2, placeholder:'UserName 2-20 Characters '  ,pattern: '^[a-zA-Z] [a-zA-Z0-9-_\.\s]{1,20}$'});
+  //Set the min length for the name to be 2 and
+  $('#name').attr({minlength: 2, maxlength:20, placeholder:'UserName 2-20 Characters'});
   //Set the pattern of the email
   $('#mail').attr({placeholder:'Email (abc@xyz.com)',pattern:"^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$"});
   //Set focus to the first Text field on load
