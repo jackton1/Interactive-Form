@@ -155,14 +155,19 @@ Attribute Selector
     font-size: 0px;
 }
 
-label[for = "name"]::after, .shirt legend::after,
-label[for = "mail"]::after, .trigger::before,
-.activities legend::after, label[for="payment"]::after
-{
+/*label[for = "name"]::after, .shirt legend::after,
+label[for = "mail"]::after, #job-role::after,
+.activities legend::after, label[for="payment"]::after*/
+fieldset label::after{
   content: "*";
   color: red;
   font-size: 20px;
 }
+
+fieldset.activities label::after{
+ content: " ";
+}
+
 
 /* =================================
   Helper Classes

@@ -290,7 +290,7 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
       error(".activities");
     } 
     if(title == "select job title"){ 
-     error("#title");
+     error(".trigger");
     }
     if (design == "Select Theme"){
     error("#design");
@@ -298,7 +298,7 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
     if(checked != 0 && title != "select job title" &&
      design != "Select Theme"){
        noerror(".activities");
-       noerror("#title");
+       noerror(".trigger");
        noerror("#design");
     }
 
