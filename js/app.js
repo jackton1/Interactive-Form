@@ -287,7 +287,7 @@ $('input#mail').on("keyup focusout", function(){
 
 
 //Check all the inputs and checkboxs for the validity of the input and if no value was entered
-$('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup change", function (){
+$('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup change click", function (){
                                                         //Defalut values
   var checked = $('input[type="checkbox"]:checked').length; //0
   var title = $('#title').val(); //"select job title"
@@ -333,11 +333,15 @@ formElement.addEventListener("submit", function(event) {
   var month = $('.item')[0].innerText; //"Choose month"
   var year = $('.item')[1].innerText; //"Choose year"
   var submit = false;
-  if(month == "Select Month" || year == "Select Year"){
+  if(month == "Select Month" && year == "Select Year"){
     error('.selectize-input');
   }
-  if(month != "Select Month" && year != "Select Year"){
+  if (ccnumber == ""){
+    error('#cc-num');
+  }
+  if(month != "Select Month" && year != "Select Year" && ccnumber != ""){
     noerror('.selectize-input');
+    noerror('#cc-num');
   }
   if(checked == 0 || title == "select job title" || design == "Select Theme"){
      submit = false;
