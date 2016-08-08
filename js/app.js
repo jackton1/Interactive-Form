@@ -344,6 +344,7 @@ formElement.addEventListener("submit", function(event) {
   //If valid alloew the user submit the form
   if(submit){
       event.cancelable = false;
+      alert("Form Submitted Successfully");
   }
   if(!submit){
     event.preventDefault();
@@ -363,7 +364,7 @@ $(function(){
   //Make the name and email fields required
   $('#name, #mail, #design, #title').prop("required",true);
   //Set the min length for the name to be 2 and 
-  $('#name').attr({minlength: 2, placeholder:'UserName 2-20 Characters'  ,pattern: '^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$'});
+  $('#name').attr({minlength: 2, placeholder:'UserName 2-20 Characters '  ,pattern: '^[a-zA-Z] [a-zA-Z0-9-_\.\s]{1,20}$'});
   //Set the pattern of the email
   $('#mail').attr({placeholder:'Email (abc@xyz.com)',pattern:"^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$"});
   //Set focus to the first Text field on load
