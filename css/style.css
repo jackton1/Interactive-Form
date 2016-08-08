@@ -149,8 +149,19 @@ Sibling Classes
 /*============================
 Attribute Selector
 ================================*/
-#color option[disabled] {
+#color option[disabled="disabled"] {
     display: none;
+    color: white;
+    font-size: 0px;
+}
+
+label[for = "name"]::after, .shirt legend::after,
+label[for = "mail"]::after, .trigger::before,
+.activities legend::after, label[for="payment"]::after
+{
+  content: "*";
+  color: red;
+  font-size: 20px;
 }
 
 /* =================================
@@ -236,7 +247,7 @@ label[class="disabled"] {
 }
 
 label[class="disabled"]::after{
-	content: " Event on the same day";
+	content: "* Event on the same day";
 	font-size: 12px;
 	color: red;
 }

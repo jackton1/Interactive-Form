@@ -1,54 +1,66 @@
-//In the Job role section reveal a text field when the other section is selected from
-//the job role drop down menu
-var addInputField = function(location, value){
-  //Add a text input field
-    //Use the id of the "other-title" for the field
-    //Add a placeholder text of "Your Title" for the field
-    var $input_field =  $('<input>').attr({id:"other-title", type:"text", placeholder:"Specify Job Role"});
-    if (value === "other"){
-      location.after($input_field);
-      $('#other-title').focus();
-    }
-    else{
-      $("#other-title").remove();
-    }
+/* Supported browsers for cross browser compatibility test.
+Google Chrome
+Mozilla Firefox
+Internet Explorer/Edge
+Safari
+*/
+//Check if the user selected other and the Field isn't empty on blur
+var checkJob = function(){
+  var $otherJob = $('#other-title');
+  //Check if the other job input is added to the DOM
+  if($otherJob.length > 0){
+    var $this = $otherJob;
+        if($this.val() == "" || $this.val().length < 4){
+          //Display a red boreder indicating the field cant be left empty
+             $this[0].style.border = "2px solid red";
+             $this.focus();
+          }
+           else{
+            //Else remove the red border
+            $this[0].style.border = "";
+           }
+  }
 }
 
-//Bind the change and click function to the
-$('#title').bind("change click", function(){
-  var jobRole = $(this);
-  var value = jobRole[0].value;
-  addInputField(jobRole, value);
-});
+//Add a text input field
+    //Use the id of the "other-title" for the field
+    //Add a placeholder text of "Your Title" for the field
+    //Add input Field to the DOM
+var addInputField = function(){
+      //get the drop container location
+          var location = $('.dropcontainer');
+    //Create an imput box with the id "other-title" and type "text" with placeholder text
+    var $input_field =  $('<input>').attr({id:"other-title",name:"other_title", type:"text",
+     placeholder:"Other Job Role", onblur:"checkJob()",minlength: 4});
+    //if the Element doesn't exist on the page
+     if($('#other-title').length == 0){
+      //place it after the drop container location
+       location.after($input_field);
+       //Autofocus 
+       $('#other-title').focus();
+     }
+}
 
+
+//Hide the colors that aren't selected 
 var hideColor = function(length){
   var i;
   for(i = 0 ; i < length ; i++){
     //Hide all colors
-    $('#color option:eq('+ i +')').prop('disabled', true);
+    $('#color option:eq('+ i +')').attr("disabled", "disabled");
   }
-
-  // $('#color option').each(function(){
-  //   $('#color option').each(function(){
-  //     if($(this).is(":disabled")){
-  //        $(this).detach();
-  //     }
-  //     else{
-  //       $(this).appendTo($('#color'));
-  //     }
-  //   });
-  // })
-
 }
 
+//Show the required color 
 var showColor = function(min, max){
   var i;
+  //Display the color options
   $('#colors-js-puns').css("display","block");
   //Set the option val to the min option
   $("#color").val($('#color option:eq('+min+')').val());
   for(i = min ; i < max ; i++){
     //Show only the color related to the option selected
-    $('#color option:eq('+i+')').prop('disabled', false);
+    $('#color option:eq('+i+')').prop('disabled',"");
   }
 }
 
@@ -63,6 +75,7 @@ $('#design').on("change keyup", function(){
 
   switch(optionValue){
     case "Select Theme":
+         //Hide the color options if the user select the Select Theme option
          $('#colors-js-puns').css("display","none");
          break;
     case "js puns":
@@ -82,44 +95,74 @@ $('#design').on("change keyup", function(){
           showColor(min, max);
          break;
     default:
+         // if none if the cases is true hide the colors select 
          $('#colors-js-puns').css("display","none");
     }
 });
 
 
-var disable = function(labels, array, checkbox){
-  //Get the total labels for all events
-  console.log(labels);
-  for(i = 0; i < array.length; i++){
-    if(array[i] != checkbox){
-      labels[array[i]].className = "disabled";
-      labels[array[i]].children[0].disabled = true;
-    }
+//Enable the disabled events if the user uncheck the conflicting event
+var enable  =function(event){
+  var labels = $('.activities label');
+  //Get the index of conflicting events
+  switch(event){
+    case 1: 
+        //Remove the disabled classname 
+        labels[3].className = "";
+        //Set the input disabled to false
+        labels[3].children[0].disabled = false;
+        break;
+    case 2:
+        labels[4].className = "";
+        labels[4].children[0].disabled = false;
+        break;
+    case 3:
+        labels[1].className = "";
+        labels[1].children[0].disabled = false;
+        break;
+    case 4:
+        labels[2].className = "";
+        labels[2].children[0].disabled = false;
+        break;
+    default:
+        //Do Nothing
+      
   }
 }
 
 
-var eventInformation = function(location){
-  //Store the Event Day and Time
-   var daysAndTime = [];
-   for (var i = 0; i < location.length;  i++){
-     var eventData = location[i].textContent.split(/[\s,$]+/);
-     var event_day = eventData[eventData.length - 3];
-     var event_time = eventData[eventData.length - 2];
-     daysAndTime.push(event_day + ' ' + event_time);
-   }
-   return daysAndTime;
+//Disable any event that conflicts with the selected event
+var disableConflict = function(event){
+
+  var labels = $('.activities label');
+  //Get the index of conflicting events
+  switch(event){
+    case 1: 
+        //Add the class name disabled 
+        labels[3].className = "disabled";
+        //Set the input disabled to true
+        labels[3].children[0].disabled = true;
+        break;
+    case 2:
+        labels[4].className = "disabled";
+        labels[4].children[0].disabled = true;
+        break;
+    case 3:
+        labels[1].className = "disabled";
+        labels[1].children[0].disabled = true;
+        break;
+    case 4:
+        labels[2].className = "disabled";
+        labels[2].children[0].disabled = true;
+        break;
+    default:
+        
+  }
 }
 
-function getAllIndexes(arr, val) {
-    var indexes = [], i = -1;
-    while ((i = arr.indexOf(val, i+1)) != -1){
-        indexes.push(i);
-    }
-    return indexes;
-}
-
-
+//When the user chooses any of the activities calculate the total
+var fieldCheckbox = $('.activities label input[type="checkbox"]');
+fieldCheckbox.each(function() {
 /*Register for Activities section of the form.
 Some events are at the same time as others.
 If the user selects a workshop, don't allow selection of a workshop at the same date and time
@@ -127,33 +170,30 @@ If the user selects a workshop, don't allow selection of a workshop at the same 
 isn't available.
 When a user unchecks an activity, make sure that competing activities (if there are any)
 are no longer disabled.*/
-//When the user chooses any of the activities calculate the total
-var events = $('.activities label');
-events.each(function() {
-
-  var $sibling = $(this).find('input[type="checkbox"]')
-  var allEvents = eventInformation(events);
-  $sibling.change(function(){
+  $(this).change(function(){
+      //Store the activity information
+      var activityData;
       //Store the final price of the selected Activities
       var price = 0;
-      var location = $sibling.parent();
-      //Check if the checkbox is checked
-       $.each(events, function() {
-          $( this ).removeClass("disabled");
-          $(this).children()[0].disabled = false;
-        });
-      if($sibling[0].checked){
-          //Get the select Event information
-          var selectedEvent =  eventInformation(location);
-          //Checkt the index of the checkbox label
-          var checkedIndex = events.index(location);
-          //Get all occurences of the Event in the allEvents array
-          var indexes = getAllIndexes(allEvents, selectedEvent[0]);
-          //If they are more than 1
-          if(indexes.length > 1){
-            //Diabled the second conflicting event
-            disable(events, indexes, checkedIndex);
-          }
+      //Store the Event Day and Time
+      // var daysAndTime = [] ;
+      
+      //Check for all selected events
+      for (var i = 0; i < fieldCheckbox.length; i++) {
+        var chosen = fieldCheckbox[i];
+        //Get the data from the page and add it to an array activityData
+        activityData = fieldCheckbox[i].nextSibling.textContent.split(/[\s,$]+/);
+        //If any checkbox is checked 
+        if (chosen.checked){
+            //Add the prices together 
+            price += parseInt(activityData[activityData.length - 1]);
+            //If an events conflicts with the selected event disable the second event
+            disableConflict(i);
+            }
+         else{
+            //Else enable the event if not checked
+          enable(i);
+        }
       }
       //Append the Total to the activities fieldset
       var $total = $('<p id="total">Total: $'+ price +'</p>');
@@ -177,11 +217,12 @@ events.each(function() {
 $('#payment').on("change keyup", function(){
   //Get the payment value selected
     var payMethod = this.value;
-     $(this).siblings().hide();
+     $(this).siblings("div").hide();
     //Check if any of the payment methods where chosen
+    //Display elements according to the selected method
     switch (payMethod) {
       case "credit card":
-           $("#credit-card").show();
+            $("#credit-card").show();
         break;
       case "paypal":
           $('#payment').siblings()[3].style.display = "block";
@@ -190,79 +231,157 @@ $('#payment').on("change keyup", function(){
          $('#payment').siblings()[4].style.display = "block";
        break;
       default:
-          $(this).siblings().hide();
+          $(this).siblings("div").hide();
+    }
+});
+
+//Check if the entered email is valid
+var emailIsValid =  function(value){
+  //Using a Regular expression to determine the validity and return tru or false
+    var regex = new RegExp ("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$");
+    return regex.test(value);
+}
+
+//Display error red bordaer over the element that isn't completed
+var error = function(element){
+  $(element).css("border","2px solid red");
+}
+//Remove the border if no errors dettected
+var noerror = function(element){
+  $(element).css("border","");
+}
+//Display when the value is valid
+var correct = function(element){
+  $(element).css("border","1px solid green");
+}
+
+//On keyup when the user started typing indicate the validity of the input
+$('input#mail').on("keyup focusout", function(){
+    var email = $("input#mail").val(); 
+    //if not valid 
+    if (!emailIsValid(email) && email !== "") {
+        error("#mail");  
+        $("input#mail").focus();  
+        return false;  
+    }
+    //else if valid
+    else if(email !== ""){
+       correct("#mail");
+    }
+    //else if empty 
+    else{
+      noerror("#mail");
     }
 });
 
 
+//Check all the inputs and checkboxs for the validity of the input and if no value was entered
+$('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup change", function (){
+                                                        //Defalut values
+  var checked = $('input[type="checkbox"]:checked').length; //0
+  var title = $('#title').val(); //"select job title"
+  var design = $('#design').val();  //"Select Theme"
+  var payment = $('#payment').val(); //"select_method"
+  var ccnumber = $('#cc-num').val(); // ""
+  var zip = $('#zip').val(); //""
+  var cvv = $('#cvv').val(); //""
+  //if invalid report error else report accepted
+    if(checked == 0 ){
+      error(".activities");
+    } 
+    if(title == "select job title"){ 
+     error("#title");
+    }
+    if (design == "Select Theme"){
+    error("#design");
+    }
+    if(checked != 0 && title != "select job title" &&
+     design != "Select Theme"){
+       noerror(".activities");
+       noerror("#title");
+       noerror("#design");
+    }
+
+});
+
+//Add Event listener on submit off the form 
+//Check all inout and values required if not valid
+//Alert the user that errors exist in the form
+var formElement = document.querySelector("form");
+formElement.addEventListener("submit", function(event) {
+  var checked = $('input[type="checkbox"]:checked').length; //0
+  var title = $('#title').val(); //"select job title"
+  var design = $('#design').val();  //"Select Theme"
+  var payment = $('#payment').val(); //"select_method"
+  var ccnumber = $('#cc-num').val(); // ""
+  var zip = $('#zip').val(); //""
+  var cvv = $('#cvv').val(); //""
+  var month = $('.item')[0].innerText; //"Choose month"
+  var year = $('.item')[1].innerText; //"Choose year"
+  var submit = false;
+  if(month == "Choose month" || year == "Choose year"){
+    error('.selectize-input');
+  }
+  if(month != "Choose month" && year != "Choose year"){
+    noerror('.selectize-input');
+  }
+  if(checked == 0 || title == "select job title" || design == "Select Theme"){
+     submit = false; 
+    error(".activities");
+    error("#title");
+    error("#design");
+  }
+  if(payment == "select_method" && ccnumber != "" && zip != "" && cvv != "" &&
+   month != "Choose month" && year != "Choose year" && checked != 0 &&
+    title != "select job title" && design != "Select Theme"){
+    submit = true;
+  }
+  if (payment == "credit card" && ccnumber != "" && zip != "" && cvv != "" &&
+   month != "Choose month" && year != "Choose year" && checked != 0 &&
+    title != "select job title" && design != "Select Theme"){
+     submit = true; 
+  }
+  //If valid alloew the user submit the form
+  if(submit){
+      event.cancelable = false;
+  }
+  if(!submit){
+    event.preventDefault();
+     console.log(event.cancelable);
+    // validate the form
+    alert("Form Incomplete submission cancelled.");
+    }
+});
+
+//Apply the seletize plugin the the month and year select boxes
+$('#exp-month').selectize();
+$('#exp-year').selectize();
+
+
+//Window on load functions
 $(function(){
+  //Make the name and email fields required
+  $('#name, #mail, #design, #title').prop("required",true);
+  //Set the min length for the name to be 2 and 
+  $('#name').attr({minlength: 2, placeholder:'UserName 2-20 Characters'  ,pattern: '^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$'});
+  //Set the pattern of the email
+  $('#mail').attr({placeholder:'Email (abc@xyz.com)',pattern:"^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$"});
   //Set focus to the first Text field on load
   $('#name').focus();
   //Hide the color div onload
   $('#colors-js-puns').css("display","none");
   //Hide all payment methods on load
-  $('#payment').siblings().hide();
+  $('#payment').siblings("div").hide();
+  //Show the credit card payment by default
+  $('.credit-card').show();
+  //Remove search feature of the selectize
   $('.selectize-input input[type = "text"]').prop("readonly" ,true);
+  //Change the cursor to a pointer
   $('.selectize-input input[type = "text"]').css("cursor", "pointer");
+  //Add attributes to the cvv input
+  $('#cvv').attr({minlength:3, placeholder:"3-4 digits", pattern:'^[0-9]{3,4}$'});
+  //Add attributes to the zip input
+  $('#zip').attr({minlength:5,placeholder:"A0A 0A0", maxlength: 7, pattern:'[a-zA-Z][0-9][a-zA-Z] [0-9][A-z][0-9]'});
+  //Add attributes to the card number input
+  $('#cc-num').attr({ placeholder:'Card Number maximum 19 digits ', maxlength:19, pattern:'^?:4[0-9]{12}(?:[0-9]{3})?|5[12345][0-9]{14}|3[47][0-9]{13}|3(?:0[012345]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35[0-9]{3})[0-9]{11}'});
 });
-
-
-
-
-
-
-/*
-
-
-Form validation. Display error messages and don't let the user submit the form
-if any of these validation errors exist:
-Name field can't be empty
-Email field must be a validly formatted e-mail address
-(you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
-You'll need to use a regular expression to get this requirement.
- See the list of Resources for links to learn about regular expressions.
-At least one activity must be checked from the list under "Register for Actitivities."
-Payment option must be selected.
-If "Credit card" is the selected payment option, make sure the user supplied a credit card number,
- a zip code, and a 3 number CVV value.
-Make sure your program is free of syntax errors.
-
-Use jsHint (see Resources links) to check your code for syntax and formatting problems.
-
-Make sure you add code comments to explain how your programming works.
-
-When JavaScript is switched off or unavailable all information required to be filled out should be visible.
-
-For example, the “Your job role” text field should already be available if someone selects “Other”.
- cross browser compatibility.
- Making sure that it looks and functions correctly in multiple (at least three) browsers is an
-important part of being a top-notch developer.
-Some browser options:
-Google Chrome
-Mozilla Firefox
-Internet Explorer/Edge
-Safari
-*/
-
-$('#exp-month').selectize();
-$('#exp-year').selectize();
-
-// var $select  = $('#exp-month').selectize({
-//      onMouseOver: function(event) {
-//        //console.log(event.target.text());
-//         var input = 'selectize-input input:eq(0)',
-//               wrapper = 'selectize-input:eq(0)';
-//         $('.' + input).attr('readonly', true);
-//         $('.' + input + ', .' + wrapper).css('cursor', 'pointer');
-//      },
-//      dropdownParent: null,
-//      maxItems: 1,
-//      valueField: 'id',
-//      labelField: 'title',
-//      onDropdownOpen: function () {
-//           $(".selectize-dropdown").hide().slideToggle();
-//       },
-//       onDropdownClose: function () {
-//           $(".selectize-dropdown").show().slideToggle();
-//       }
-// });

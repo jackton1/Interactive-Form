@@ -116,23 +116,6 @@ window.onload=function()
 {
 	tamingselect();
 	// add more functions if necessary
-
-    //Add input Field to the DOM
-	var addInputField = function(){
-		    //get the drop container location
-            var location = $('.dropcontainer');
-			//Create an imput box with the id "other-title" and type "text" with placeholder text
-			var $input_field =  $('<input>').attr({id:"other-title", type:"text",
-			 placeholder:"Specify Job Role"});
-			//if the Element doesn't exist on the page
-			 if($('#other-title').length == 0){
-			 	//place it after the drop container location
-				 location.after($input_field);
-				 //Autofocus 
- 				 $('#other-title').focus();
-			 }
-	}
-
 	//Get the values of the li items click
 	$('.dropcontainer ul li').on("click",function(){
 		//Convert the value to lowercase

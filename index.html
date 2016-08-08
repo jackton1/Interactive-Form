@@ -40,6 +40,9 @@
           <option value="student">Student</option>
           <option value="other">Other</option>
         </select>
+        <noscript>
+          <input type="text" name="other_title" id = "other-title" placeholder= "Other Job Role" minlength=4>
+        </noscript>
       </fieldset>
 
       <fieldset class="shirt">
@@ -118,6 +121,7 @@
 
           <label>Expiration Date:</label>
           <select id="exp-month" name="user_exp-month">
+            <option>Choose month</option>
             <option value="1">1 - January</option>
             <option value="2">2 - February</option>
             <option value="3">3 - March</option>
@@ -132,6 +136,7 @@
             <option value="12">12 - December</option>
           </select>
           <select id="exp-year" name="user_exp-year" style ="float:right">
+            <option>Choose year</option>
             <option value="2016">2016</option>
             <option value="2017">2017</option>
             <option value="2018">2018</option>
@@ -159,5 +164,6 @@
   <script type='text/javascript' src='js/Styling_Select/js/select.js'></script>
   <script type="text/javascript" src="js/selectize/js/standalone/selectize.min.js"></script>
   <script type="text/javascript" src="js/app.js" ></script>
+
 </body>
 </html>
