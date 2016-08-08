@@ -127,14 +127,18 @@ window.onload=function()
 		else {
 			//Remove it from the dom if the value isn't other
 			$("#other-title").remove();
+			//Else remove the error message
+			$('#minchar').remove();
 		}
 	});
 
-	//If the drop down button is click 
+	//If the drop down button is click
 	$('a.trigger').on("click", function(){
 		//Check the selected values isn't other
 		if($('a.trigger').text() !== "Other"){
           $("#other-title").remove()
+					//Else remove the error message
+					$('#minchar').remove();
 		}
 		else{
 			addInputField();

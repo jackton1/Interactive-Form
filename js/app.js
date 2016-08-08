@@ -26,6 +26,11 @@ var checkJob = function(){
             $('#minchar').remove();
            }
   }
+  else{
+    //Else remove the error message
+    $('#minchar').remove();
+  }
+
 }
 
 //Add a text input field
@@ -34,7 +39,7 @@ var checkJob = function(){
     //Add input Field to the DOM
 var addInputField = function(){
       //get the drop container location
-          var location = $('.dropcontainer');
+     var location = $('.dropcontainer');
     //Create an imput box with the id "other-title" and type "text" with placeholder text
     var $input_field =  $('<input>').attr({id:"other-title",name:"other_title", type:"text",
      placeholder:"Other Job Role",onkeyup:"checkJob()", onblur:"checkJob()",minlength: 4});
@@ -301,10 +306,13 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
     if (design == "Select Theme"){
     error("#design");
     }
-    if(checked != 0 && title != "select job title" &&
-     design != "Select Theme"){
+    if(checked != 0 ){
        noerror(".activities");
+    }
+    if(title != "select job title"){
        noerror(".trigger");
+    }
+    if(design != "Select Theme"){
        noerror("#design");
     }
 
