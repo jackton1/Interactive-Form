@@ -11,13 +11,19 @@ var checkJob = function(){
   if($otherJob.length > 0){
     var $this = $otherJob;
         if($this.val() == "" || $this.val().length < 4){
-          //Display a red boreder indicating the field cant be left empty
+          //Display a red border indicating the field cant be left empty
              $this[0].style.border = "2px solid red";
+             //Add an error message to the page indicating the number of allowed values
+             if($('#minchar').length == 0){
+               $this.after('<p id="minchar" style="color:red;">Please Enter 4 or more characters</p>');
+             }
              $this.focus();
           }
            else{
             //Else remove the red border
             $this[0].style.border = "";
+            //Else remove the error message
+            $('#minchar').remove();
            }
   }
 }
@@ -31,7 +37,7 @@ var addInputField = function(){
           var location = $('.dropcontainer');
     //Create an imput box with the id "other-title" and type "text" with placeholder text
     var $input_field =  $('<input>').attr({id:"other-title",name:"other_title", type:"text",
-     placeholder:"Other Job Role", onblur:"checkJob()",minlength: 4});
+     placeholder:"Other Job Role",onkeyup:"checkJob()", onblur:"checkJob()",minlength: 4});
     //if the Element doesn't exist on the page
      if($('#other-title').length == 0){
       //place it after the drop container location
