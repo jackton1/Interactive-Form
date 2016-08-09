@@ -287,7 +287,7 @@ $('input#mail').on("keyup focusout", function(){
 
 
 //Check all the inputs and checkboxs for the validity of the input and if no value was entered
-$('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup change click", function (){
+$('#title, .activities label input, #design, #cc-num, #zip, #cvv').bind("focusout keyup change click", function (){
                                                         //Defalut values
   var checked = $('input[type="checkbox"]:checked').length; //0
   var title = $('#title').val(); //"select job title"
@@ -298,7 +298,7 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
   var cvv = $('#cvv').val(); //""
   //if invalid report error else report accepted
     if(checked == 0 ){
-      error(".activities");
+      error(".activities label");
     }
     if(title == "select job title"){
      error(".trigger");
@@ -307,7 +307,7 @@ $('#title, .activities, #design, #cc-num, #zip, #cvv').bind("focusout keyup chan
     error("#design");
     }
     if(checked != 0 ){
-       noerror(".activities");
+       noerror(".activities label");
     }
     if(title != "select job title"){
        noerror(".trigger");
@@ -345,7 +345,7 @@ formElement.addEventListener("submit", function(event) {
   }
   if(checked == 0 || title == "select job title" || design == "Select Theme"){
      submit = false;
-    error(".activities");
+    error(".activities label");
     error("#title");
     error("#design");
   }
