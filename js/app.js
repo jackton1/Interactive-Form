@@ -359,7 +359,11 @@ formElement.addEventListener("submit", function(event) {
     title != "select job title" && design != "Select Theme"){
      submit = true;
   }
-  //If valid alloew the user submit the form
+  if (payment == "paypal"  ||  payment == "bitcoin" && checked != 0 &&
+    title != "select job title" && design != "Select Theme"){
+     submit = true;
+  }
+  //If valid allow the user submit the form
   if(submit){
       event.cancelable = false;
       alert("Form Submitted Successfully");
