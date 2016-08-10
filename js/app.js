@@ -403,9 +403,23 @@ $(function(){
   //Change the cursor to a pointer
   $('.selectize-input input[type = "text"]').css("cursor", "pointer");
   //Add attributes to the cvv input
-  $('#cvv').attr({minlength:3, placeholder:"3-4 digits", pattern:'^[0-9]{3,4}$'});
+  $('#cvv').attr({
+    minlength:3,
+    autocomplete: "off",
+    placeholder:"3-4 digits", 
+    pattern:'^[0-9]{3,4}$'});
   //Add attributes to the zip input
-  $('#zip').attr({minlength:5,placeholder:"A0A 0A0", maxlength: 7, pattern:'[a-zA-Z][0-9][a-zA-Z] [0-9][A-z][0-9]'});
+  $('#zip').attr({
+    minlength:5,
+    autocomplete:"off", 
+    placeholder:"A0A 0A0",
+    maxlength: 7, 
+    pattern:'[a-zA-Z][0-9][a-zA-Z] [0-9][A-z][0-9]'});
   //Add attributes to the card number input
-  $('#cc-num').attr({ placeholder:'Card Number maximum 19 digits ', maxlength:19, pattern:'^?:4[0-9]{12}(?:[0-9]{3})?|5[12345][0-9]{14}|3[47][0-9]{13}|3(?:0[012345]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35[0-9]{3})[0-9]{11}'});
+  $('#cc-num').attr({ 
+        placeholder:'Card Number maximum 19 digits ',
+        autocomplete:"off",
+        maxlength:19, 
+        pattern:'^?:4[0-9]{12}(?:[0-9]{3})?|5[12345][0-9]{14}|3[47][0-9]{13}|3(?:0[012345]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35[0-9]{3})[0-9]{11}'
+  });
 });
